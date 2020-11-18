@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class EarthquakeListFragment  extends Fragment
 {
+    // stores an array of Earthquakes
     private ArrayList<Earthquake> mEarthquakes = new ArrayList<>();
 
     private RecyclerView mRecyclerView; // getting reference to the recyclerView object
@@ -40,10 +41,10 @@ public class EarthquakeListFragment  extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
-    {
+    {   // method use to inflate the layout ---fragment_earthquake_list
         View view = inflater.inflate(R.layout.fragment_earthquake_list, container, false);
 
-        // getting the recyclerView to identify the recycler view layout in xml
+        // getting the reference to the recyclerView to identify the recycler view layout in xml
         mRecyclerView = view.findViewById(R.id.list);
 
         return view;
@@ -68,9 +69,10 @@ public class EarthquakeListFragment  extends Fragment
     {
         for (Earthquake earthquake: earthquakes)
         {
-            if (!mEarthquakes.contains(earthquake)) // if the mEarthquake variable does not contain
-            { // the earthquake item, add the item to it.
+            if (!mEarthquakes.contains(earthquake)) // if the mEarthquake list variable does not
+            { // contain the earthquake item, add the item to it.
                 mEarthquakes.add(earthquake);
+                // notify the Recycler view Adapter that a new item has been inserted
                 mEarthquakeAdapter.notifyItemInserted(mEarthquakes.indexOf(earthquake));
             }
         }

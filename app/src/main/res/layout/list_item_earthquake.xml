@@ -11,3 +11,6 @@
         android:textAppearance="?attr/textAppearanceListItem"/>
 
 </FrameLayout>
+<!--This is used to display each earthquake in the list. For now, we use a SimpleTextView
+that displays a single line of text using the margin  stated and the Android framework's
+list item text appearance-->

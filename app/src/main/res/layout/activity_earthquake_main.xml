@@ -8,3 +8,4 @@
     tools:context=".MainActivity">
 
 </FrameLayout>
+<!--FrameLayout will be used as the container for the Fragment you created in step 5-->

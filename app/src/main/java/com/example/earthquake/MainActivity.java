@@ -53,5 +53,5 @@ public class MainActivity extends AppCompatActivity
         dummyQuakes.add(new Earthquake("1", now, "LA", null, 6.5, null));
 
         mEarthquakeListFragment.setEarthquakes(dummyQuakes);
-    }
-}
+    } // end method onCreate
+} // end class MainActivity

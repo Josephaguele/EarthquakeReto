@@ -8,5 +8,6 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager">
-
+<!--This defines the layout for the Fragment class created; it should include a single RecyclerView
+element-->
 </androidx.recyclerview.widget.RecyclerView>
