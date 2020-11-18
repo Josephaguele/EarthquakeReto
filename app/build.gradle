@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        dataBinding.enabled=true // enabling data binding
     }
     buildTypes {
         release {
@@ -26,6 +27,8 @@ dependencies {
     // adding dependency for recyclerview
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
+    // adding dependency for data binding
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
