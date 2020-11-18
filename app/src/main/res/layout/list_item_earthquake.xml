@@ -34,5 +34,6 @@
         app:layout_constraintRight_toLeftOf="@id/magnitude"
         app:layout_constraintTop_toBottomOf="@id/date"/>
 </anroid.support.constraint.ConstraintLayout>
-    <!--This is used to display each earthquake in the list. -->
+    <!--This is used to display each earthquake in the list.
+    It shows the magnitude, date and details-->
 
