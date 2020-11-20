@@ -14,6 +14,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,8 @@ public class EarthquakeListFragment  extends Fragment
     // getting reference to the EarthquakeRecyclerViewAdapter and calling a new RecyclerViewAdapter
     // passing in the reference to the list of earthquakes
     private EarthquakeRecyclerViewAdapter mEarthquakeAdapter = new EarthquakeRecyclerViewAdapter(mEarthquakes);
+
+    protected EarthquakeViewModel earthquakeViewModel;
 
     public EarthquakeListFragment() {}
 
@@ -77,4 +81,30 @@ public class EarthquakeListFragment  extends Fragment
             }
         }
     }
-}
+
+    /*Within the Earthquake List Fragment, update the onActivityCreated handler. Using
+    the View Model Provider’s static of method to retrieve the current instance of your
+    Earthquake View Model. Add an Observer to the Live Data returned from your View
+    Model—it will set the Earthquake List Fragment Earthquake List when your Activity is
+    created, and again whenever the list of parsed Earthquakes is updated:*/
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        // Retrieve the Earthquake View Model for the parent Activity.
+        earthquakeViewModel = ViewModelProviders.of(getActivity()).get(EarthquakeViewModel.class);
+
+        // Get the data from the View Model, adn observe any changes.
+        earthquakeViewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>()
+        {
+            @Override
+            public void onChanged(List<Earthquake> earthquakes)
+            {
+                // When the View Model changes, update the list
+                if (earthquakes != null)
+                    setEarthquakes(earthquakes);
+            }
+        });
+    } // end method onActivityCreated
+} // end class EarthquakeListFragment

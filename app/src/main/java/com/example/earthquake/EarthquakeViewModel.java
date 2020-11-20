@@ -58,12 +58,19 @@ public class EarthquakeViewModel extends AndroidViewModel
     }
 
     // Asynchronously load the Earthquakes from the feed.
+    /*Update the loadEarthquakes method to download and parse the earthquake feed. This
+    must be done on a background thread, so implement an AyncTask to simplify this process. In
+    the background, extract each earthquake and parse the details to obtain the ID, date, magnitude,
+    link, and location. Once the feed has been parsed, update the onPostExecute handler
+    to set the value of the Mutable Live Data that represents our List of Earthquakes. This will
+    alert any registered Observers, passing them the updated list:*/
     public void loadEarthquakes()
     {
         new AsyncTask<Void, Void, List<Earthquake>>()
         {
             @Override
-            protected List<Earthquake> doInBackground(Void... voids) {
+            protected List<Earthquake> doInBackground(Void... voids)
+            {
                 // Result ArrayList of parsed earthquakes.
                 ArrayList<Earthquake> earthquakes = new ArrayList<>(0);
 
@@ -86,7 +93,7 @@ public class EarthquakeViewModel extends AndroidViewModel
                         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                         DocumentBuilder db = dbf.newDocumentBuilder();
 
-                        // Parse teh earthquake feed.
+                        // Parse the earthquake feed.
                         Document dom = db.parse(in);
                         Element docEle = dom.getDocumentElement();
 
@@ -96,7 +103,7 @@ public class EarthquakeViewModel extends AndroidViewModel
                         {
                             for (int i = 0; i < nl.getLength(); i++)
                             {
-                                /// Check to se if our loading has been cancelled, in which case
+                                /// Check to see if our loading has been cancelled, in which case
                                 // return what we have so far
                                 if (isCancelled())
                                 {
@@ -165,10 +172,11 @@ public class EarthquakeViewModel extends AndroidViewModel
             }
 
             @Override
-            protected void onPostExecute(List<Earthquake> data) {
+            protected void onPostExecute(List<Earthquake> data)
+            {
                 // Update the Live Data with the new list.
                 earthquakes.setValue(data);
             }
         }.execute();
-    }
+    } // end method loadEarthquakes
 }

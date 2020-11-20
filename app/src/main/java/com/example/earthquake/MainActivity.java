@@ -3,6 +3,7 @@ package com.example.earthquake;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_LIST_FRAGMENT = "TAG_LIST_FRAGMENT";
 
     EarthquakeListFragment mEarthquakeListFragment;
+    EarthquakeViewModel earthquakeViewModel; // making reference to EarthquakeViewModel class
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,13 +47,7 @@ public class MainActivity extends AppCompatActivity
             mEarthquakeListFragment =(EarthquakeListFragment) fm.findFragmentByTag(TAG_LIST_FRAGMENT);
         }
 
-
-        // creating some dummy Earthquakes to test our app
-        Date now = Calendar.getInstance().getTime();
-        List<Earthquake> dummyQuakes = new ArrayList<>(0);
-        dummyQuakes.add(new Earthquake("0", now, "San Jose", null, 7.3, null));
-        dummyQuakes.add(new Earthquake("1", now, "LA", null, 6.5, null));
-
-        mEarthquakeListFragment.setEarthquakes(dummyQuakes);
+        // Retrieve the Earthquake View Model for this Activity.
+        earthquakeViewModel = ViewModelProviders.of(this).get(EarthquakeViewModel.class);
     } // end method onCreate
 } // end class MainActivity
