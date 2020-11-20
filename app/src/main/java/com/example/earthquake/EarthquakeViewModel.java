@@ -34,5 +34,8 @@ public class EarthquakeViewModel extends AndroidViewModel
     }
 
     // Asynchronously load the Earthquakes from the feed.
-    public void loadEarthquakes(){}
+    public void loadEarthquakes()
+    {
+        
+    }
 }
