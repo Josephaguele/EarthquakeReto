@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class EarthquakeListFragment  extends Fragment
 {
@@ -31,6 +32,8 @@ public class EarthquakeListFragment  extends Fragment
     private EarthquakeRecyclerViewAdapter mEarthquakeAdapter = new EarthquakeRecyclerViewAdapter(mEarthquakes);
 
     protected EarthquakeViewModel earthquakeViewModel;
+
+    private SwipeRefreshLayout mSwipeToRefreshView;
 
     public EarthquakeListFragment() {}
 
@@ -50,6 +53,8 @@ public class EarthquakeListFragment  extends Fragment
 
         // getting the reference to the recyclerView to identify the recycler view layout in xml
         mRecyclerView = view.findViewById(R.id.list);
+        // get the reference to the swipe-to-refresh view layout in XML
+        mSwipeToRefreshView = view.findViewById(R.id.swiperefresh);
 
         return view;
     }
@@ -63,6 +68,50 @@ public class EarthquakeListFragment  extends Fragment
         Context context = view.getContext();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.setAdapter(mEarthquakeAdapter);
+
+        //Set up the Swipe to Refresh view
+        mSwipeToRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                updateEarthquakes(); // this methods is what updates earthquake whenever the app is
+                // swipe.
+            }
+        });
+    }
+
+    /*The update itself will be performed by the Earthquake View Model, which we communicate with
+    through the parent Activity. We define a new OnListFragmentInteractionListener within the
+    Earthquake List Fragment; it should include an onListFragmentRefreshRequested method
+    that’s called when we request a refresh via the updateEarthquakes method added in Step 9:*/
+    public interface OnListFragmentInteractionListener
+    {
+        void onListFragmentRefreshRequested();
+    }
+
+    private OnListFragmentInteractionListener mListener;
+
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+        mListener = (OnListFragmentInteractionListener) context;
+    }
+
+    @Override
+    public void onDetach()
+    {
+        super.onDetach();
+        mListener = null;
+    }
+
+    // this is for updating the earthquake when the user swipes, but the viewModel in
+    // MainActivity is where the update is really done 
+    protected void updateEarthquakes()
+    {
+        if (mListener != null)
+            mListener.onListFragmentRefreshRequested();
     }
 
 
@@ -79,7 +128,8 @@ public class EarthquakeListFragment  extends Fragment
                 // notify the Recycler view Adapter that a new item has been inserted
                 mEarthquakeAdapter.notifyItemInserted(mEarthquakes.indexOf(earthquake));
             }
-        }
+        } // this disables the "refreshing" visual indicator when an update has been received.
+        mSwipeToRefreshView.setRefreshing(false);
     }
 
     /*Within the Earthquake List Fragment, update the onActivityCreated handler. Using
@@ -107,4 +157,7 @@ public class EarthquakeListFragment  extends Fragment
             }
         });
     } // end method onActivityCreated
+
+
+
 } // end class EarthquakeListFragment

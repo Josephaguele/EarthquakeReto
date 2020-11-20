@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements EarthquakeListFragment.OnListFragmentInteractionListener
 {
     private static final String TAG_LIST_FRAGMENT = "TAG_LIST_FRAGMENT";
 
@@ -50,4 +50,16 @@ public class MainActivity extends AppCompatActivity
         // Retrieve the Earthquake View Model for this Activity.
         earthquakeViewModel = ViewModelProviders.of(this).get(EarthquakeViewModel.class);
     } // end method onCreate
+
+    @Override
+    public void onListFragmentRefreshRequested()
+    {
+        updateEarthquakes();
+    }
+
+    private void updateEarthquakes()
+    {
+        // Request the ViewModel update the earthquakes from the USGS feed.
+        earthquakeViewModel.loadEarthquakes();
+    }
 } // end class MainActivity
