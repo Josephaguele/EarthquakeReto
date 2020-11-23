@@ -5,7 +5,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,9 +18,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements EarthquakeListFragment.OnListFragmentInteractionListener
 {
     private static final String TAG_LIST_FRAGMENT = "TAG_LIST_FRAGMENT";
+    private static final int MENU_PREFERENCES = Menu.FIRST+1;
+    private static final int SHOW_PREFERENCES  = 1;
+
 
     EarthquakeListFragment mEarthquakeListFragment;
     EarthquakeViewModel earthquakeViewModel; // making reference to EarthquakeViewModel class
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,5 +69,32 @@ public class MainActivity extends AppCompatActivity implements EarthquakeListFra
     {
         // Request the ViewModel update the earthquakes from the USGS feed.
         earthquakeViewModel.loadEarthquakes();
+    }
+
+    // ADDING MENU ITEM TO DISPLAY THE PREFERENCES ACTIVITY. This will open the Preferences Activity
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        menu.add(0, MENU_PREFERENCES, Menu.NONE, R.string.menu_settings);
+        return true;
+    }
+
+
+    /*Override the onOptionsItemSelected method to display the PreferencesActivity when
+    the new Menu Item from Step 11 is selected. To launch the Preferences Activity, create an
+    explicit Intent, and pass it in to the startActivityForResult method. This will launch the
+    Activity and alert the EarthquakeMainActivity class when the Preferences Activity is finished
+    via the onActivityResult handler.*/
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId())
+        {
+            case MENU_PREFERENCES:
+                Intent intent = new Intent(this, PreferencesActivity.class);
+                startActivityForResult(intent, SHOW_PREFERENCES);
+                return true;
+        }
+        return false;
     }
 } // end class MainActivity
