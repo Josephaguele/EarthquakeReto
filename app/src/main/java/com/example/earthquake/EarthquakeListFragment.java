@@ -1,6 +1,7 @@
 package com.example.earthquake;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -120,15 +122,34 @@ public class EarthquakeListFragment  extends Fragment
     // item has been inserted.
     public void setEarthquakes(List<Earthquake> earthquakes)
     {
+        // We apply the magnitude filter by updating the setEarthquakes method from the Earthquake
+        //ListFragment to update the minimum magnitude preference, and check each earthquake's
+        // magnitude before adding it to the list.
+        updateFromPreferences();
+
         for (Earthquake earthquake: earthquakes)
         {
-            if (!mEarthquakes.contains(earthquake)) // if the mEarthquake list variable does not
-            { // contain the earthquake item, add the item to it.
-                mEarthquakes.add(earthquake);
-                // notify the Recycler view Adapter that a new item has been inserted
-                mEarthquakeAdapter.notifyItemInserted(mEarthquakes.indexOf(earthquake));
+            if(earthquake.getMagnitude() >= mMinimumMagnitude)
+            {
+                if (!mEarthquakes.contains(earthquake)) // if the mEarthquake list variable does not
+                { // contain the earthquake item, add the item to it.
+                    mEarthquakes.add(earthquake);
+                    // notify the Recycler view Adapter that a new item has been inserted
+                    mEarthquakeAdapter.notifyItemInserted(mEarthquakes.indexOf(earthquake));
+                }
             }
-        } // this disables the "refreshing" visual indicator when an update has been received.
+
+        }
+        if (mEarthquakes != null && mEarthquakes.size() > 0)
+            for (int i = mEarthquakes.size() - 1; i >= 0; i--)
+            {
+                if (mEarthquakes.get(i).getMagnitude() < mMinimumMagnitude)
+                {
+                    mEarthquakes.remove(i);
+                    mEarthquakeAdapter.notifyItemRemoved(i);
+                }
+            }
+        // this disables the "refreshing" visual indicator when an update has been received.
         mSwipeToRefreshView.setRefreshing(false);
     }
 
@@ -158,6 +179,14 @@ public class EarthquakeListFragment  extends Fragment
         });
     } // end method onActivityCreated
 
+
+    private int mMinimumMagnitude = 0;
+    // This method reads the SharedPreferences minimum magnitude
+    private void updateFromPreferences()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mMinimumMagnitude = Integer.parseInt(prefs.getString(PreferencesActivity.PREF_MIN_MAG,"3"));
+    }
 
 
 } // end class EarthquakeListFragment
