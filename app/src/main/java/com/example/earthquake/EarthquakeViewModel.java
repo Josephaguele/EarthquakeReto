@@ -179,4 +179,7 @@ public class EarthquakeViewModel extends AndroidViewModel
             }
         }.execute();
     } // end method loadEarthquakes
-}
+
+
+
+}// end class

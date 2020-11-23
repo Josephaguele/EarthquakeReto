@@ -107,7 +107,7 @@ public class EarthquakeListFragment  extends Fragment
     }
 
     // this is for updating the earthquake when the user swipes, but the viewModel in
-    // MainActivity is where the update is really done 
+    // MainActivity is where the update is really done
     protected void updateEarthquakes()
     {
         if (mListener != null)
