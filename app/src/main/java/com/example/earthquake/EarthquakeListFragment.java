@@ -177,6 +177,12 @@ public class EarthquakeListFragment  extends Fragment
                     setEarthquakes(earthquakes);
             }
         });
+
+        // The final step is to create a new OnSharedPreferenceChangeListener within the  Earthquake
+        // List Fragment that will repopulate the Earthquake list, applying the magnitude filter
+        // based on the new setting:
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
     } // end method onActivityCreated
 
 
@@ -189,4 +195,18 @@ public class EarthquakeListFragment  extends Fragment
     }
 
 
+    private SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =
+            new SharedPreferences.OnSharedPreferenceChangeListener()
+            {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+                {
+                    if (PreferencesActivity.PREF_MIN_MAG.equals(key))
+                    {
+                        List<Earthquake> earthquakes = earthquakeViewModel.getEarthquakes().getValue();
+                        if (earthquakes != null)
+                            setEarthquakes(earthquakes);
+                    }
+                }
+            };
 } // end class EarthquakeListFragment
