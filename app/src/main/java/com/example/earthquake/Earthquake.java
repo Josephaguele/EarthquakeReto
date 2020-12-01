@@ -9,6 +9,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
 
 @Entity // this defines the structure of the database that will be used to store instances of the annotated class
 public class Earthquake
@@ -58,4 +59,6 @@ public class Earthquake
         else
             return false;
     }
+
+
 }
