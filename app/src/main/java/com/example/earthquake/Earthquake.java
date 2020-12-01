@@ -6,9 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity // this defines the structure of the database that will be used to store instances of the annotated class
 public class Earthquake
 {
-    // class fields
+    /**class fields**/
+    @NonNull
+    @PrimaryKey
     private String mId;
     private Date mDate;
     private String mDetails;
