@@ -4,6 +4,8 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {url 'https://maven.google.com'} // repository is added to support earthquakes
+        // persistence with Room
         
     }
     dependencies {
