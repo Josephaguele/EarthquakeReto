@@ -40,7 +40,7 @@ the Earthquakes from the feed:*/
 public class EarthquakeViewModel extends AndroidViewModel
 {
     private static final String TAG = "EarthquakeUpdate";
-    private MutableLiveData<List<Earthquake>> earthquakes;
+    private LiveData<List<Earthquake>> earthquakes;
 
     public EarthquakeViewModel(Application application)
     {
@@ -51,8 +51,16 @@ public class EarthquakeViewModel extends AndroidViewModel
     {
         if (earthquakes == null)
         {
-            earthquakes = new MutableLiveData<List<Earthquake>>();
-            loadEarthquakes();
+            /*Update the View Model’s earthquakes class variable to be of type LiveData, and update
+        the getEarthquakes method to query the Room database. The Earthquake List Fragment
+        is already expecting Live Data, so no further changes are necessary—the onChanged handler
+        will be triggered whenever the Room database is modified:*/
+            // Load the Earthquakes from the database.
+            earthquakes =
+                    EarthquakeDatabaseAccessor
+                            .getInstance(getApplication())
+                            .earthquakeDAO()
+                            .loadAllEarthquakes();
         }
        return earthquakes;
     }
@@ -177,7 +185,7 @@ public class EarthquakeViewModel extends AndroidViewModel
                         .getInstance(getApplication())
                         .earthquakeDAO()
                         .insertEarthquakes(earthquakes);
-                
+
                 // Return our result array.
                 return earthquakes;
             }
@@ -185,8 +193,6 @@ public class EarthquakeViewModel extends AndroidViewModel
             @Override
             protected void onPostExecute(List<Earthquake> data)
             {
-                // Update the Live Data with the new list.
-                earthquakes.setValue(data);
             }
         }.execute();
     } // end method loadEarthquakes
