@@ -167,6 +167,17 @@ public class EarthquakeViewModel extends AndroidViewModel
                 {
                     Log.e(TAG,"SAX Exception", e);
                 }
+
+                /*Now update the doInBackground method within the Async Task of your EarthquakeViewModel
+            to store the newly parsed List of Earthquakes into the database using the Earthquake
+            Database Accessor from Step 7. Note that our DAO insert method has been configured to handle
+            collisions by replacing existing rows to avoid duplicate entries:**/
+                // Insert the newly parsed array of Earthquakes
+                EarthquakeDatabaseAccessor
+                        .getInstance(getApplication())
+                        .earthquakeDAO()
+                        .insertEarthquakes(earthquakes);
+                
                 // Return our result array.
                 return earthquakes;
             }
