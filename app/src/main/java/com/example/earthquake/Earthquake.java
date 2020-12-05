@@ -11,6 +11,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 
+/*The App will be persisting instances of the Earthquake class, so  we annotate it with the @Entity annotation
+* The id field is the primary key that cannot be null*/
 @Entity // this defines the structure of the database that will be used to store instances of the annotated class
 public class Earthquake
 {
