@@ -32,8 +32,15 @@ public class EarthquakeSearchProvider extends ContentProvider
 
     @Nullable
     @Override
-    public String getType(@NonNull Uri uri) {
-        return null;
+    public String getType(@NonNull Uri uri)
+    { // Override the Content Provider's getType method to return the MIME type for search suggestions
+        switch (uriMatcher.match(uri))
+        {
+            case SEARCH_SUGGESTIONS:
+                return SearchManager.SUGGEST_MIME_TYPE;
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
+        }
     }
 
     @Nullable
@@ -53,7 +60,7 @@ public class EarthquakeSearchProvider extends ContentProvider
                       @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
     }
-    ;
+
 
     /* Adding a UriMatcher, which can be used to handle requests made using different URI pattersn.s
      Because we are using this Content Provider exclusively for search suggestions, you only need
