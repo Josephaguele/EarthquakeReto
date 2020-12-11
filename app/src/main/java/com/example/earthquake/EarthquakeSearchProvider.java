@@ -1,17 +1,19 @@
 package com.example.earthquake;
 
+import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-// To begin searching the Earthquake project, we create the EarthquakeSearchProvider class that
-// extends ContentProvider. It will be used exclusively to generate search suggestions for your
-// Search View. The ContentProvider class has some abstract methods that must be implemented which
-// include getType, query,insert, delete, and update methods.
+/* To begin searching the Earthquake project, we create the EarthquakeSearchProvider class that
+ extends ContentProvider. It will be used exclusively to generate search suggestions for your
+ Search View. The ContentProvider class has some abstract methods that must be implemented which
+ include getType, query,insert, delete, and update methods.*/
 
 public class EarthquakeSearchProvider extends ContentProvider
 {
@@ -51,4 +53,26 @@ public class EarthquakeSearchProvider extends ContentProvider
                       @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
     }
+    ;
+
+    /* Adding a UriMatcher, which can be used to handle requests made using different URI pattersn.s
+     Because we are using this Content Provider exclusively for search suggestions, you only need
+     to include matches for those query types:*/
+    private static final int SEARCH_SUGGESTIONS = 1;
+
+    // Allocate the UriMatcher object, recognize search requests.
+    private static final UriMatcher uriMatcher;
+    static
+    {
+        uriMatcher = new UriMatcher (UriMatcher.NO_MATCH);
+        uriMatcher.addURI("com.professionalandroid.provider.earthquake",
+                SearchManager.SUGGEST_URI_PATH_QUERY, SEARCH_SUGGESTIONS);
+        uriMatcher.addURI("com.professionalandroid.provider.earthquake",
+                SearchManager.SUGGEST_URI_PATH_QUERY + "/*", SEARCH_SUGGESTIONS);
+        uriMatcher.addURI("com.professionalandroid.provider.earthquake",
+                SearchManager.SUGGEST_URI_PATH_SHORTCUT, SEARCH_SUGGESTIONS);
+        uriMatcher.addURI("com.professionalandroid.provider.earthquake",
+                SearchManager.SUGGEST_URI_PATH_SHORTCUT + "/*", SEARCH_SUGGESTIONS);
+    }
+
 }
