@@ -18,8 +18,11 @@ import androidx.annotation.Nullable;
 public class EarthquakeSearchProvider extends ContentProvider
 {
     @Override
-    public boolean onCreate() {
-        return false;
+    public boolean onCreate()
+    {// Rather than accessing a SQlite database directly, we use the Room Database created to
+        // perform searches. Confirm we can access it within the onCreate handler and return true
+        EarthquakeDatabaseAccessor.getInstance(getContext().getApplicationContext());
+        return true;
     }
 
     @Nullable
