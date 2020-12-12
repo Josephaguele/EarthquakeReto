@@ -23,6 +23,9 @@
         </activity> <!-- This activity is added to complete the Preferences Activity. The intent
         filter will be triggered if the user chooses to modify the app's background data settings
         from the system preferences-->
+        <provider
+            android:name=".EarthquakeSearchProvider"
+            android:authorities="com.example.earthquake" />
     </application>
 
 </manifest>
