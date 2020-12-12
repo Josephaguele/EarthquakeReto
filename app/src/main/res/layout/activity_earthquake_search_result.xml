@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--The list of Earthquake search results will be displayed using a Recycler View that uses your
+existing Earthquake list item layout and Recycler View Adapter. Modify the layout for the
+Earthquake Search Result Activity created in Step 11 to include a Recycler View:-->
+
+<androidx.recyclerview.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_result_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    app:layoutManager="LinearLayoutManager"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".EarthquakeSearchResultActivity">
+
+</androidx.recyclerview.widget.RecyclerView>
