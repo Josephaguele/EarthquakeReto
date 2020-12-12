@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.earthquake">
-<uses-permission android:name="android.permission.INTERNET"/> <!--adding internet permission-->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,23 +9,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EarthquakeSearchResultActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".PreferencesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity> <!-- This activity is added to complete the Preferences Activity. The intent
+        </activity>
+        <!--
+ This activity is added to complete the Preferences Activity. The intent
         filter will be triggered if the user chooses to modify the app's background data settings
-        from the system preferences-->
+        from the system preferences
+        -->
         <provider
             android:name=".EarthquakeSearchProvider"
             android:authorities="com.example.earthquake" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
