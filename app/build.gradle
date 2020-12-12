@@ -17,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    // This is done because the next steps require Lambda functions, so to make sure our project is
+    // targeting Java 1.8, we confirm the target and source caompatiblity compile options within
+    // the Android node are set to 1.8
+    compileOptions{
+        targetCompatiblity 1.8
+        sourceCompatiblity 1.8
+    }
 }
 
 dependencies {
