@@ -19,11 +19,11 @@ android {
     }
 
     // This is done because the next steps require Lambda functions, so to make sure our project is
-    // targeting Java 1.8, we confirm the target and source caompatiblity compile options within
+    // targeting Java 1.8, we confirm the target and source compatibility compile options within
     // the Android node are set to 1.8
     compileOptions{
-        targetCompatiblity 1.8
-        sourceCompatiblity 1.8
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
