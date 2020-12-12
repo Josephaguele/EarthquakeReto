@@ -30,6 +30,18 @@ public class EarthquakeSearchProvider extends ContentProvider
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection,
                         @Nullable String selection, @Nullable String[] selectionArgs,
                         @Nullable String sortOrder) {
+        if (uriMatcher.match(uri) == SEARCH_SUGGESTIONS)
+        {
+            String searchQuery = "%" + uri.getLastPathSegment() + "%";
+
+            EarthquakeDAO earthquakeDAO = EarthquakeDatabaseAccessor.getInstance(getContext()
+                    .getApplicationContext()).earthquakeDAO();
+
+            Cursor c = earthquakeDAO.generateSearchSuggestions(searchQuery);
+
+            // Return a cursor of search suggestions.
+            return c;
+        }
         return null;
     }
 
