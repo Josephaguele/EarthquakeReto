@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements EarthquakeListFra
         searchView.setSearchableInfo(searchableInfo);
         searchView.setIconifiedByDefault(false);
 
-        menu.add(0, MENU_PREFERENCES, Menu.NONE, R.string.menu_settings);
         return true;
     }
 
@@ -113,11 +112,12 @@ public class MainActivity extends AppCompatActivity implements EarthquakeListFra
         super.onOptionsItemSelected(item);
         switch (item.getItemId())
         {
-            case MENU_PREFERENCES:
+            case R.id.settings_menu_item:
                 Intent intent = new Intent(this, PreferencesActivity.class);
                 startActivityForResult(intent, SHOW_PREFERENCES);
                 return true;
         }
         return false;
     }
+
 } // end class MainActivity
