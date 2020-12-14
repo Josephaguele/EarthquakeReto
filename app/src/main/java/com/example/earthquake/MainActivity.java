@@ -5,10 +5,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,6 +81,23 @@ public class MainActivity extends AppCompatActivity implements EarthquakeListFra
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        super.onCreateOptionsMenu(menu);
+
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        // Use the Search Manager to find the SearchableInfo related
+        // to the Search Result Activity
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(
+                new ComponentName(getApplicationContext(),
+                        EarthquakeSearchResultActivity.class));
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
+        searchView.setSearchableInfo(searchableInfo);
+        searchView.setIconifiedByDefault(false);
+
         menu.add(0, MENU_PREFERENCES, Menu.NONE, R.string.menu_settings);
         return true;
     }
