@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -72,4 +73,17 @@ public class EarthquakeSearchResultActivity extends AppCompatActivity
         mEarthquakeAdapter.notifyDataSetChanged();
     };
 
+    // WE override the onNewIntent handler to update the search query if a new search request Intent
+    // is received.
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        // If the search Activity exists, and another search is performed, set the launch Intent to
+        // the newly received search Intent.
+        setIntent(intent);
+
+        // Extract the search query and update the searchQuery Live Data.
+        String query = getIntent().getStringExtra(SearchManager.QUERY);
+        setSearchQuery(query);
+    }
 }
